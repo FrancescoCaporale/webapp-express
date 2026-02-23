@@ -6,4 +6,4 @@ const port = 3000;
 
 app.listen(port, () => {
     console.log(`Server in ascolto sulla porta ${port}`);
-});
+})
