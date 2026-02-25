@@ -1,11 +1,25 @@
 const express = require("express");
 const app = express();
+const cors = require("cors")
 const connection = require("./db");
-
 const port = 3000;
+
+app.use(cors({
+    origin: 'http://localhost:5173'
+}));
 
 app.listen(port, () => {
     console.log(`Server in ascolto sulla porta ${port}`);
+});
+
+
+app.get("/movies", async (req, res) => {
+    try {
+        const [results] = await connection.query("select * from movies");
+        res.json(results);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 app.get("/movies/:id", async (req, res) => {
@@ -38,3 +52,4 @@ app.get("/movies/:id", async (req, res) => {
     }
 
 });
+
